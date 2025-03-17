@@ -16,7 +16,8 @@ enum NamingStyle {
     LOWER_CAMEL_CASE,  // lowerCamelCase
     UPPER_SNAKE_CASE,  // UPPER_SNAKE_CASE
     LOWER_SNAKE_CASE,  // lower_snake_case
-    FILE_CAMEL_CASE    // fileCamelCase
+    FILE_CAMEL_CASE,   // fileCamelCase
+    MYLIB_FILE_NAME    // sXXXXXXX_name_xyz
 };
 
 // Checks if the given identifier (variable name, function name etc.)

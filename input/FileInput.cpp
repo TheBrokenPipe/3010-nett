@@ -244,10 +244,13 @@ std::string GetSanitizedFileContent(const std::string FilePath) {
     // Check for filename violations
     auto FileName = ExtractFileName(FilePath);
     if (!naming::FileNameFollowsNamingStyle(
-                FileName, naming::FILE_CAMEL_CASE)) {
+                FileName, naming::FILE_CAMEL_CASE) &&
+                !naming::FileNameFollowsNamingStyle(
+                FileName, naming::MYLIB_FILE_NAME)) {
         std::stringstream ErrMsg;
         ErrMsg << "'" << FileName
-               << "' misnamed. Files should be namedLikeThis.c";
+               << "' misnamed. Files should be namedLikeThis.c"
+               " or sXXXXXXX_devname.c for mylib source files";
         GlobalViolationManager.AddViolation(
                 new NamingViolation(FilePath, 1, ErrMsg.str()));
     }

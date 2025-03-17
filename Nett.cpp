@@ -244,8 +244,6 @@ class NettASTConsumer : public ASTConsumer {
         // OVERALL checks
         Matcher.addMatcher(FuncDeclMatcher,
                 new checks::overall::FuncDefinitionInHeaderChecker());
-        Matcher.addMatcher(
-                FuncDeclMatcher, new checks::overall::FuncLengthChecker());
 
         // WARNING checks
         Matcher.addMatcher(GoToMatcher, new checks::warning::GoToChecker());

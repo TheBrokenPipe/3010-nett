@@ -1,8 +1,12 @@
 # nett
+
+> [!IMPORTANT]
+> This is the CSSE2310 style checker hacked to work with the CSSE3010 style guide. Do your style checks manually, I'm not responsible if it doesn't pick up all your style violations.
+
 `nett` is command-line utility used to perform style
 checking on C source files. It checks for
 compliance with the style guide used by the 
-CSSE2310 programming course at the University of Queensland.
+<s>CSSE2310</s> CSSE3010 programming course at the University of Queensland.
 
 ## Usage
 
@@ -37,9 +41,8 @@ To do this, run the following:
 ```
 git clone https://github.com/llvm/llvm-project.git && \
   cd llvm-project && \
-  git checkout 82fbc5d45b0c2fc9050d1d5e335e35afb4ab2611 && \
   cd clang-tools-extra && \
-  git submodule add https://github.com/dgrobb/nett.git && \
+  git submodule add https://github.com/TheBrokenPipe/3010-nett.git && \
   cd nett
 ```
 

@@ -37,7 +37,8 @@ void FuncNameChecker::run(const MatchFinder::MatchResult& Result) {
 
         // Function names need to be lower_snake_case
         if (!nett::naming::IdentifierFollowsNamingStyle(
-                    Name, nett::naming::LOWER_SNAKE_CASE)) {
+                    Name, nett::naming::LOWER_SNAKE_CASE) &&
+                    !Name.endswith("_IRQHandler")) {   // Ignore ISRs.
             std::stringstream ErrMsg;
 
             // We don't need to check if a function name has already been

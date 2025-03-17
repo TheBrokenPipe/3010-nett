@@ -15,8 +15,9 @@ static const llvm::Regex Matchers[] = {
         llvm::Regex("^[a-z][a-zA-Z0-9]*$"),    // lowerCamelCase
         llvm::Regex("^[A-Z][A-Z0-9_]*$"),      // UPPER_SNAKE_CASE
         llvm::Regex("^[a-z][a-z0-9_]*$"),      // lower_snake_case
-        llvm::Regex("^[a-z0-9][a-zA-Z0-9]*$")  // fileCamelCase <-- allows for
+        llvm::Regex("^[a-z0-9][a-zA-Z0-9]*$"), // fileCamelCase <-- allows for
                                                // numbers
+        llvm::Regex("^s[0-9]{7}_[a-z0-9_]+$")  // sXXXXXXX_mylib_xyz
 };
 
 bool IdentifierFollowsNamingStyle(llvm::StringRef ID, enum NamingStyle Style) {

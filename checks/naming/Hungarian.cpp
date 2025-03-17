@@ -35,42 +35,42 @@ bool IsHungarianVarName(llvm::StringRef VarName, clang::QualType VarType) {
     } else if (VarTypeString.find("[") != NotFound &&
                VarTypeString.find("]") != NotFound) {
         return IsHungarianNameArray(VarName);
-    } else if (VarTypeString.startswith_lower("char")) {
+    } else if (VarTypeString.startswith_insensitive("char")) {
         return IsHungarianNameChar(VarName);
-    } else if (VarTypeString.startswith_lower("struct")) {
+    } else if (VarTypeString.startswith_insensitive("struct")) {
         return IsHungarianNameStruct(VarName);
-    } else if (VarTypeString.startswith_lower("enum")) {
+    } else if (VarTypeString.startswith_insensitive("enum")) {
         return IsHungarianNameEnum(VarName);
     }
     return false;
 }
 
 static bool IsHungarianNameFuncPtr(llvm::StringRef VarName) {
-    return VarName.endswith_lower("fp") || VarName.startswith_lower("fp");
+    return VarName.endswith_insensitive("fp") || VarName.startswith_insensitive("fp");
 }
 
 static bool IsHungarianNameChar(llvm::StringRef VarName) {
-    return VarName.endswith_lower("chr") || VarName.startswith_lower("chr") ||
-           VarName.find_lower("char") != llvm::StringRef::npos;
+    return VarName.endswith_insensitive("chr") || VarName.startswith_insensitive("chr") ||
+           VarName.find_insensitive("char") != llvm::StringRef::npos;
 }
 
 static bool IsHungarianNamePtr(llvm::StringRef VarName) {
-    return VarName.endswith_lower("ptr") || VarName.startswith_lower("ptr") ||
-           VarName.find_lower("pointer") != llvm::StringRef::npos;
+    return VarName.endswith_insensitive("ptr") || VarName.startswith_insensitive("ptr") ||
+           VarName.find_insensitive("pointer") != llvm::StringRef::npos;
 }
 
 static bool IsHungarianNameArray(llvm::StringRef VarName) {
-    return VarName.endswith_lower("arr") || VarName.startswith_lower("arr") ||
-           VarName.find_lower("array") != llvm::StringRef::npos;
+    return VarName.endswith_insensitive("arr") || VarName.startswith_insensitive("arr") ||
+           VarName.find_insensitive("array") != llvm::StringRef::npos;
 }
 
 static bool IsHungarianNameStruct(llvm::StringRef VarName) {
-    return VarName.endswith_lower("str") || VarName.startswith_lower("str") ||
-           VarName.find_lower("struct") != llvm::StringRef::npos;
+    return VarName.endswith_insensitive("str") || VarName.startswith_insensitive("str") ||
+           VarName.find_insensitive("struct") != llvm::StringRef::npos;
 }
 
 static bool IsHungarianNameEnum(llvm::StringRef VarName) {
-    return VarName.find_lower("enum") != llvm::StringRef::npos;
+    return VarName.find_insensitive("enum") != llvm::StringRef::npos;
 }
 
 }  // namespace naming
