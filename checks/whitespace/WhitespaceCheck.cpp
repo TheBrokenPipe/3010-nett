@@ -203,6 +203,29 @@ void CheckPointerAlignment(clang::SourceLocation PtrLoc,
     }
 }
 
+void CheckEmptyLine(clang::SourceLocation OpeningLoc, clang::SourceManager& SM,
+        bool IsCase) {
+    auto PresumedOpeningLoc = SM.getPresumedLoc(OpeningLoc);
+    auto File = PresumedOpeningLoc.getFilename();
+    auto NextLine = PresumedOpeningLoc.getLine() + 1;
+    auto NextLineLoc = SM.translateLineCol(PresumedOpeningLoc.getFileID(), NextLine, 1);
+    if (NextLineLoc.isValid()) {
+        char LineStart = *SM.getCharacterData(NextLineLoc);
+        if (LineStart == '\n' || LineStart == '\0') {
+            return;
+        }
+    }
+
+    std::stringstream ErrMsg;
+    if (IsCase) {
+        ErrMsg << "There should be an empty line after cases labels.";
+    } else {
+        ErrMsg << "There should be an empty line after opening braces.";
+    }
+    GlobalViolationManager.AddViolation(new WhitespaceViolation(
+        File, NextLine, ErrMsg.str()));
+}
+
 // Checks if the given pointer token is within brackets '[]'
 // If so, it is not a pointer, but a multiplication sign. So we return true.
 // Otherwise, if no brackets are found within the given min and

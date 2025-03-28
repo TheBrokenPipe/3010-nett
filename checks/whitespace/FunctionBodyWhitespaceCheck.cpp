@@ -69,6 +69,13 @@ class FunctionASTVisitor
                     RParenLoc, Stmt->getThen()->getBeginLoc(), 1, SM, LangOpts);
         }
 
+        // Next, we figure out what 3010 did to the 2310 style guide and
+        // bark at outselves if there's no empty line between the opening
+        // brace and whatever comes after.
+        if (llvm::isa<clang::CompoundStmt>(Stmt->getThen())) {
+            CheckEmptyLine(Stmt->getThen()->getBeginLoc(), SM);
+        }
+
         // Next, we check the whitespace between the closing brace and
         // the else statement
         if (llvm::isa<clang::CompoundStmt>(Stmt->getThen()) &&
@@ -246,6 +253,11 @@ class FunctionASTVisitor
                 CheckLocationWhitespace(DoLoc, OpenBraceLoc, 1, SM, LangOpts);
             }
 
+            // Then we take the 3010 rules into consideration.
+            if (llvm::isa<clang::CompoundStmt>(Stmt->getBody())) {
+                CheckEmptyLine(Stmt->getBody()->getBeginLoc(), SM);
+            }
+
             // Then we check the spacing between the closing curly brace and the
             // 'while'
             auto CloseBraceLoc = Stmt->getBody()->getEndLoc();
@@ -338,6 +350,11 @@ class FunctionASTVisitor
             }
         }
 
+        // Oops, we're not done yet for CSSE3010. Bruh.
+        if (llvm::isa<clang::CompoundStmt>(Stmt->getBody())) {
+            CheckEmptyLine(Stmt->getBody()->getBeginLoc(), SM);
+        }
+
         return true;
     }
 
@@ -379,6 +396,11 @@ class FunctionASTVisitor
                 CheckLocationWhitespace(
                         CondEndLoc, OpenBraceLoc, 1, SM, LangOpts);
             }
+        }
+
+        // You know the deal now :3.
+        if (llvm::isa<clang::CompoundStmt>(Stmt->getBody())) {
+            CheckEmptyLine(Stmt->getBody()->getBeginLoc(), SM);
         }
 
         return true;
@@ -434,6 +456,9 @@ class FunctionASTVisitor
                 CheckLocationWhitespace(ColonLoc, BraceLoc, 1, SM, LangOpts);
             }
         }
+
+        // Yup, once again we check if the next line is empty...
+        CheckEmptyLine(Stmt->getColonLoc(), SM, true);
 
         return true;
     }

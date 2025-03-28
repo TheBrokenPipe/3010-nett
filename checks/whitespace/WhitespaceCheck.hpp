@@ -77,6 +77,9 @@ void CheckSourceRangeCommaWhitespace(clang::SourceLocation StartLoc,
 int CountLocationWhitespace(clang::SourceLocation StartLoc,
         clang::SourceLocation EndLoc, clang::SourceManager& SM);
 
+void CheckEmptyLine(clang::SourceLocation OpeningLoc,
+        clang::SourceManager& SM, bool IsCase = false);
+
 // Performs whitespace checks (pointer alignment, bracket spacing etc.)
 // on tokens within the given two source locations.
 void CheckSourceRangeWhitespaceTokens(clang::SourceLocation StartLoc,
